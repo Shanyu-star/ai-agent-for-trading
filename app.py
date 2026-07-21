@@ -49,20 +49,6 @@ st.sidebar.metric(
     "Available Cash",
     f"${st.session_state.cash:,.2f}"
 )
-# Calculate portfolio value
-portfolio_value = 0
-
-for asset, holding in st.session_state.portfolio.items():
-    portfolio_value += holding["shares"] * current_price
-
-st.sidebar.metric(
-    "Portfolio Value",
-    f"${portfolio_value:,.2f}"
-)
-st.sidebar.metric(
-    "Open Positions",
-    len(st.session_state.portfolio)
-)
 # ── HEADER ────────────────────────────────────────────────────
 st.title("🌽 Corn Futures AI Trading Agent")
 st.write(f"💰 Cash: ${st.session_state.cash:,.2f}")
@@ -193,7 +179,11 @@ col4.metric("Confidence", f"{conf:.0%}")
 # ==========================
 # PAPER TRADING
 # ==========================
+# Calculate portfolio value
+portfolio_value = 0
 
+for asset, holding in st.session_state.portfolio.items():
+    portfolio_value += holding["shares"] * current_price
 st.subheader("💼 Paper Trading")
 
 quantity = st.number_input(
