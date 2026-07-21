@@ -403,18 +403,17 @@ with tab1:
     # ==========================
     # AI FORECAST
     # ==========================
+    # ==========================
+    # AI BUY/SELL PREDICTIONS
+    # ==========================
 
-   # ==========================
-   # AI BUY/SELL PREDICTIONS
-   # ==========================
+    X_plot = scaler.transform(d_plot[features].values)
+    predictions = model.predict(X_plot)
 
-   X_plot = scaler.transform(d_plot[features].values)
-   predictions = model.predict(X_plot)
+    buy_points = d_plot[predictions == 2]
+    sell_points = d_plot[predictions == 0]
 
-   buy_points = d_plot[predictions == 2]
-   sell_points = d_plot[predictions == 0]
-   forecast_df = forecast_prices(d_plot, forecast_days=30)
-
+    forecast_df = forecast_prices(d_plot, forecast_days=30)
     fig = make_subplots(
         rows=2,
         cols=1,
