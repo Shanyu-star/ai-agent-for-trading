@@ -404,6 +404,15 @@ with tab1:
     # AI FORECAST
     # ==========================
 
+   # ==========================
+   # AI BUY/SELL PREDICTIONS
+   # ==========================
+
+    X_plot = scaler.transform(d_plot[features])
+    predictions = model.predict(X_plot)
+
+    buy_points = d_plot[predictions == 2]
+    sell_points = d_plot[predictions == 0]
     forecast_df = forecast_prices(d_plot, forecast_days=30)
 
     fig = make_subplots(
@@ -436,6 +445,45 @@ with tab1:
        ),
        row=1,
        col=1
+)
+    # ==========================
+    # AI BUY MARKERS
+    # ==========================
+
+    fig.add_trace(
+        go.Scatter(
+            x=buy_points.index,
+            y=buy_points["Low"] * 0.995,
+            mode="markers",
+            marker=dict(
+                symbol="triangle-up",
+                size=12,
+                color="lime"
+            ),
+            name="AI BUY"
+        ),
+        row=1,
+        col=1
+)
+
+    # ==========================
+    # AI SELL MARKERS
+    # ==========================
+
+    fig.add_trace(
+        go.Scatter(
+            x=sell_points.index,
+            y=sell_points["High"] * 1.005,
+            mode="markers",
+            marker=dict(
+                symbol="triangle-down",
+                size=12,
+                color="red"
+            ),
+            name="AI SELL"
+        ),
+        row=1,
+        col=1
 )
     for ma, color in [('ma_10','orange'),('ma_20','cyan'),('ma_50','yellow')]:
         fig.add_trace(go.Scatter(
