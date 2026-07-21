@@ -39,7 +39,26 @@ st.markdown("""
     .hold { background-color: #2a2a1a; color: #ffcc00; border: 2px solid #ffcc00; }
 </style>
 """, unsafe_allow_html=True)
+# ==========================
+# PAPER TRADING SIDEBAR
+# ==========================
 
+st.sidebar.header("💼 Paper Trading")
+
+st.sidebar.metric(
+    "Available Cash",
+    f"${st.session_state.cash:,.2f}"
+)
+
+st.sidebar.metric(
+    "Portfolio Value",
+    "$0.00"
+)
+
+st.sidebar.metric(
+    "Open Positions",
+    len(st.session_state.portfolio)
+)
 # ── HEADER ────────────────────────────────────────────────────
 st.title("🌽 Corn Futures AI Trading Agent")
 st.write(f"💰 Cash: ${st.session_state.cash:,.2f}")
