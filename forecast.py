@@ -100,6 +100,7 @@ def forecast_prices(df, forecast_days=30):
         periods=forecast_days,
         freq="B"
     )
+
 future_open = []
 future_high = []
 future_low = []
