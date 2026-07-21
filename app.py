@@ -49,12 +49,16 @@ st.sidebar.metric(
     "Available Cash",
     f"${st.session_state.cash:,.2f}"
 )
+# Calculate portfolio value
+portfolio_value = 0
+
+for asset, holding in st.session_state.portfolio.items():
+    portfolio_value += holding["shares"] * current_price
 
 st.sidebar.metric(
     "Portfolio Value",
-    "$0.00"
+    f"${portfolio_value:,.2f}"
 )
-
 st.sidebar.metric(
     "Open Positions",
     len(st.session_state.portfolio)
