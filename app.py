@@ -186,7 +186,26 @@ col1.metric("Current Price", f"${current_price:.2f}")
 col2.metric("RSI", f"{dm['rsi'].iloc[-1]:.1f}")
 col3.metric("ATR (Volatility)", f"{dm['atr'].iloc[-1]:.2f}")
 col4.metric("Confidence", f"{conf:.0%}")
+# ==========================
+# PAPER TRADING
+# ==========================
 
+st.subheader("💼 Paper Trading")
+
+quantity = st.number_input(
+    "Quantity",
+    min_value=1,
+    value=1,
+    step=1
+)
+
+col_buy, col_sell = st.columns(2)
+
+with col_buy:
+    buy_clicked = st.button("🟢 Buy")
+
+with col_sell:
+    sell_clicked = st.button("🔴 Sell")
 st.divider()
 
 # ── SIGNAL BOX ────────────────────────────────────────────────
