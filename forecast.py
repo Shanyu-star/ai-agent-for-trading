@@ -43,57 +43,58 @@ def forecast_prices(df, forecast_days=30):
     )
 
     model.fit(X, y)
+    model.fit(X, y)
 
-# ----------------------------
-# Improved Recursive Forecast
-# ----------------------------
+    # ----------------------------
+    # Improved Recursive Forecast
+    # ----------------------------
 
-history = data.copy()
-predictions = []
+    history = data.copy()
+    predictions = []
 
-recent_volatility = history["Close"].pct_change().std()
+    recent_volatility = history["Close"].pct_change().std()
 
-trend = (
-    history["Close"].tail(10).mean()
-    - history["Close"].tail(30).mean()
-) / 30
+    trend = (
+        history["Close"].tail(10).mean()
+        - history["Close"].tail(30).mean()
+    ) / 30
 
-last_price = history.iloc[-1]["Close"]
+    last_price = history.iloc[-1]["Close"]
 
-for day in range(forecast_days):
+    for day in range(forecast_days):
 
-    sample = pd.DataFrame([{
-        "lag1": history.iloc[-1]["Close"],
-        "lag2": history.iloc[-2]["Close"],
-        "lag3": history.iloc[-3]["Close"],
-        "MA10": history["Close"].tail(10).mean(),
-        "MA20": history["Close"].tail(20).mean()
-    }])
+        sample = pd.DataFrame([{
+            "lag1": history.iloc[-1]["Close"],
+            "lag2": history.iloc[-2]["Close"],
+            "lag3": history.iloc[-3]["Close"],
+            "MA10": history["Close"].tail(10).mean(),
+            "MA20": history["Close"].tail(20).mean()
+        }])
 
-    base_prediction = model.predict(sample)[0]
+        base_prediction = model.predict(sample)[0]
 
-    noise = np.random.normal(
-        0,
-        recent_volatility * last_price * 0.5
-    )
+        noise = np.random.normal(
+            0,
+            recent_volatility * last_price * 0.5
+        )
 
-    predicted = (
-        base_prediction
-        + trend * day
-        + noise
-    )
+        predicted = (
+            base_prediction
+            + trend * day
+            + noise
+        )
 
-    predictions.append(predicted)
+        predictions.append(predicted)
 
-    new_row = history.iloc[-1].copy()
-    new_row["Close"] = predicted
+        new_row = history.iloc[-1].copy()
+        new_row["Close"] = predicted
 
-    history = pd.concat(
-        [history, pd.DataFrame([new_row])],
-        ignore_index=True
-    )
+        history = pd.concat(
+            [history, pd.DataFrame([new_row])],
+            ignore_index=True
+        )
 
-    last_price = predicted  
+        last_price = predicted
 
     future_dates = pd.date_range(
         start=df.index[-1] + pd.Timedelta(days=1),
