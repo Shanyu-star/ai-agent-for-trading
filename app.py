@@ -200,7 +200,14 @@ with st.spinner("Loading corn futures data..."):
 
 with st.spinner("Training AI model..."):
     model, scaler, features, dm = train_model(df, df_h)
+# ==========================
+# TEST FORECAST
+# ==========================
 
+forecast_df = forecast_prices(df, forecast_days=30)
+
+st.subheader("🔮 AI Forecast (Next 30 Days)")
+st.dataframe(forecast_df)
 # ── CURRENT SIGNAL ────────────────────────────────────────────
 latest = dm[features].iloc[-1].values
 X_latest = scaler.transform([latest])
