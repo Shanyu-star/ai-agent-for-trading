@@ -169,7 +169,16 @@ signal_map = {0: ('SELL', 'sell', '🔴'),
               2: ('BUY',  'buy',  '🟢')}
 sig_label, sig_class, sig_icon = signal_map[signal]
 current_price = float(dm['Close'].iloc[-1])
+# ==========================
+# ACCOUNT SUMMARY
+# ==========================
 
+portfolio_value = 0
+
+for asset, holding in st.session_state.portfolio.items():
+    portfolio_value += holding["shares"] * current_price
+
+total_account_value = st.session_state.cash + portfolio_value
 # ── TOP METRICS ───────────────────────────────────────────────
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Current Price", f"${current_price:.2f}")
