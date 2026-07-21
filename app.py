@@ -240,7 +240,24 @@ else:
 # ==========================
 # BUY LOGIC
 # ==========================
+# ==========================
+# TRANSACTION HISTORY
+# ==========================
 
+st.subheader("📜 Transaction History")
+
+if st.session_state.transactions:
+
+    for tx in reversed(st.session_state.transactions):
+
+        st.write(
+            f"{tx['type']} | "
+            f"{tx['quantity']} contract(s) | "
+            f"${tx['price']:.2f}"
+        )
+
+else:
+    st.write("No transactions yet.")
 if buy_clicked:
     total_cost = current_price * quantity
 
