@@ -100,10 +100,44 @@ def forecast_prices(df, forecast_days=30):
         periods=forecast_days,
         freq="B"
     )
+future_open = []
+future_high = []
+future_low = []
+future_close = []
+future_volume = []
 
-    forecast_df = pd.DataFrame({
-        "Date": future_dates,
-        "Predicted_Close": predictions
-    })
+prev_close = data["Close"].iloc[-1]
 
-    return forecast_df
+for close in predictions:
+
+    open_price = prev_close
+
+    spread = abs(close - open_price)
+
+    high = max(open_price, close) + np.random.uniform(0.3, 1.0) * (spread + 2)
+
+    low = min(open_price, close) - np.random.uniform(0.3, 1.0) * (spread + 2)
+
+    volume = np.random.randint(
+        int(df["Volume"].tail(20).mean() * 0.8),
+        int(df["Volume"].tail(20).mean() * 1.2)
+    )
+
+    future_open.append(open_price)
+    future_high.append(high)
+    future_low.append(low)
+    future_close.append(close)
+    future_volume.append(volume)
+
+    prev_close = close
+
+forecast_df = pd.DataFrame({
+    "Date": future_dates,
+    "Open": future_open,
+    "High": future_high,
+    "Low": future_low,
+    "Close": future_close,
+    "Volume": future_volume
+})
+
+return forecast_df
