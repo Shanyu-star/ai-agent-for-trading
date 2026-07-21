@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
-
+np.random.seed(42)
 
 def forecast_prices(df, forecast_days=30):
     """
@@ -42,7 +42,6 @@ def forecast_prices(df, forecast_days=30):
         random_state=42
     )
 
-    model.fit(X, y)
     model.fit(X, y)
 
     # ----------------------------
