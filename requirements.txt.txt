@@ -4,3 +4,8 @@ numpy
 plotly
 scikit-learn
 streamlit
+requests
+multitasking
+peewee
+beautifulsoup4
+lxml
