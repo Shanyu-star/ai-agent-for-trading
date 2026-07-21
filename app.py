@@ -13,7 +13,18 @@ st.set_page_config(
     page_icon="🌽",
     layout="wide"
 )
+# ==========================
+# PAPER TRADING SESSION
+# ==========================
 
+if "cash" not in st.session_state:
+    st.session_state.cash = 100000.0
+
+if "portfolio" not in st.session_state:
+    st.session_state.portfolio = {}
+
+if "transactions" not in st.session_state:
+    st.session_state.transactions = []
 # ── STYLES ────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -31,6 +42,7 @@ st.markdown("""
 
 # ── HEADER ────────────────────────────────────────────────────
 st.title("🌽 Corn Futures AI Trading Agent")
+st.write(f"💰 Cash: ${st.session_state.cash:,.2f}")
 st.markdown("*Multiscale candlestick analysis powered by machine learning*")
 st.divider()
 
