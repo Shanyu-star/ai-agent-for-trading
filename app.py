@@ -406,16 +406,16 @@ with tab1:
         subplot_titles=("Corn Futures Price", "Volume")
     )
    fig.add_trace(
-    go.Candlestick(
-        x=forecast_df["Date"],
-        open=forecast_df["Open"],
-        high=forecast_df["High"],
-        low=forecast_df["Low"],
-        close=forecast_df["Close"],
-        name="🔮 AI Forecast"
-    ),
-    row=1,
-    col=1
+       go.Candlestick(
+           x=forecast_df["Date"],
+           open=forecast_df["Open"],
+           high=forecast_df["High"],
+           low=forecast_df["Low"],
+           close=forecast_df["Close"],
+           name="🔮 AI Forecast"
+      ),
+      row=1,
+      col=1
 )
     for ma, color in [('ma_10','orange'),('ma_20','cyan'),('ma_50','yellow')]:
         fig.add_trace(go.Scatter(
