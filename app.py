@@ -208,6 +208,36 @@ with col_sell:
     sell_clicked = st.button("🔴 Sell")
 st.divider()
 # ==========================
+# PORTFOLIO
+# ==========================
+
+st.subheader("📊 Your Portfolio")
+
+if st.session_state.portfolio:
+
+    for asset, holding in st.session_state.portfolio.items():
+
+        current_value = holding["shares"] * current_price
+        invested = holding["shares"] * holding["avg_price"]
+        profit = current_value - invested
+
+        st.info(
+            f"""
+**{asset}**
+
+Contracts: **{holding['shares']}**
+
+Average Buy Price: **${holding['avg_price']:.2f}**
+
+Current Value: **${current_value:.2f}**
+
+Profit/Loss: **${profit:.2f}**
+"""
+        )
+
+else:
+    st.warning("No open positions.")
+# ==========================
 # BUY LOGIC
 # ==========================
 
