@@ -161,7 +161,15 @@ with st.spinner("Training AI model..."):
 # ==========================
 # TEST FORECAST
 # ==========================
+# ==========================
+# AI BUY/SELL PREDICTIONS
+# ==========================
 
+X_plot = scaler.transform(d_plot[features])
+predictions = model.predict(X_plot)
+
+buy_points = d_plot[predictions == 2]
+sell_points = d_plot[predictions == 0]
 forecast_df = forecast_prices(df, forecast_days=30)
 
 st.subheader("🔮 AI Forecast (Next 30 Days)")
