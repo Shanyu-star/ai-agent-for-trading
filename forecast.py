@@ -44,37 +44,56 @@ def forecast_prices(df, forecast_days=30):
 
     model.fit(X, y)
 
-    # ----------------------------
-    # Recursive Forecast
-    # ----------------------------
+# ----------------------------
+# Improved Recursive Forecast
+# ----------------------------
 
-    history = data.copy()
+history = data.copy()
+predictions = []
 
-    predictions = []
+recent_volatility = history["Close"].pct_change().std()
 
-    for _ in range(forecast_days):
+trend = (
+    history["Close"].tail(10).mean()
+    - history["Close"].tail(30).mean()
+) / 30
 
-        latest = history.iloc[-1]
+last_price = history.iloc[-1]["Close"]
 
-        sample = pd.DataFrame([{
-            "lag1": latest["Close"],
-            "lag2": history.iloc[-2]["Close"],
-            "lag3": history.iloc[-3]["Close"],
-            "MA10": history["Close"].tail(10).mean(),
-            "MA20": history["Close"].tail(20).mean()
-        }])
+for day in range(forecast_days):
 
-        pred = model.predict(sample)[0]
+    sample = pd.DataFrame([{
+        "lag1": history.iloc[-1]["Close"],
+        "lag2": history.iloc[-2]["Close"],
+        "lag3": history.iloc[-3]["Close"],
+        "MA10": history["Close"].tail(10).mean(),
+        "MA20": history["Close"].tail(20).mean()
+    }])
 
-        predictions.append(pred)
+    base_prediction = model.predict(sample)[0]
 
-        new_row = latest.copy()
-        new_row["Close"] = pred
+    noise = np.random.normal(
+        0,
+        recent_volatility * last_price * 0.5
+    )
 
-        history = pd.concat(
-            [history, pd.DataFrame([new_row])],
-            ignore_index=True
-        )
+    predicted = (
+        base_prediction
+        + trend * day
+        + noise
+    )
+
+    predictions.append(predicted)
+
+    new_row = history.iloc[-1].copy()
+    new_row["Close"] = predicted
+
+    history = pd.concat(
+        [history, pd.DataFrame([new_row])],
+        ignore_index=True
+    )
+
+    last_price = predicted  
 
     future_dates = pd.date_range(
         start=df.index[-1] + pd.Timedelta(days=1),
