@@ -391,15 +391,15 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
     d_plot = dm.tail(days)
-# ==========================
-# AI BUY/SELL PREDICTIONS
-# ==========================
+    # ==========================
+    # AI BUY/SELL PREDICTIONS
+    # ==========================
 
-X_plot = scaler.transform(d_plot[features])
-predictions = model.predict(X_plot)
+    X_plot = scaler.transform(d_plot[features])
+    predictions = model.predict(X_plot)
 
-buy_points = d_plot[predictions == 2]
-sell_points = d_plot[predictions == 0]
+    buy_points = d_plot[predictions == 2]
+    sell_points = d_plot[predictions == 0]
     # ==========================
     # AI FORECAST
     # ==========================
