@@ -435,6 +435,11 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
     d_plot = dm.tail(days)
+    # ==========================
+# AI FORECAST
+# ==========================
+
+forecast_df = forecast_prices(d_plot, forecast_days=30)
     fig = make_subplots(rows=2, cols=1,
         row_heights=[0.7, 0.3], vertical_spacing=0.05,
         subplot_titles=("Corn Futures Price", "Volume"))
@@ -457,6 +462,26 @@ with tab1:
         x=d_plot.index, y=d_plot['Volume'],
         marker_color=colors, name='Volume'
     ), row=2, col=1)
+# ==========================
+# AI Forecast Line
+# ==========================
+
+fig.add_trace(
+    go.Scatter(
+        x=forecast_df["Date"],
+        y=forecast_df["Predicted_Close"],
+        mode="lines+markers",
+        name="🔮 AI Forecast",
+        line=dict(
+            color="deepskyblue",
+            width=4,
+            dash="dash"
+        ),
+        marker=dict(size=7)
+    ),
+    row=1,
+    col=1
+)
     fig.update_layout(
         height=600, template='plotly_dark',
         xaxis_rangeslider_visible=False
