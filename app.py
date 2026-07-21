@@ -436,8 +436,8 @@ with tab1:
     days = st.slider("Days to show", 30, 365, 120)
     d_plot = dm.tail(days)
     # ==========================
-# AI FORECAST
-# ==========================
+    # AI FORECAST
+    # ==========================
 
 forecast_df = forecast_prices(d_plot, forecast_days=30)
 fig = make_subplots(rows=2, cols=1,
