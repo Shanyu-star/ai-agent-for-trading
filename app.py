@@ -395,7 +395,7 @@ with tab1:
     # AI BUY/SELL PREDICTIONS
     # ==========================
 
-    X_plot = scaler.transform(d_plot[features])
+    X_plot = scaler.transform(d_plot[features].values)
     predictions = model.predict(X_plot)
 
     buy_points = d_plot[predictions == 2]
@@ -408,7 +408,7 @@ with tab1:
    # AI BUY/SELL PREDICTIONS
    # ==========================
 
-    X_plot = scaler.transform(d_plot[features])
+   X_plot = scaler.transform(d_plot[features].values)
     predictions = model.predict(X_plot)
 
     buy_points = d_plot[predictions == 2]
