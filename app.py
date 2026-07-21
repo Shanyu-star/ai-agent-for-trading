@@ -150,7 +150,50 @@ def train_model(df, df_h):
     )
     model.fit(X_train, y[:split])
     return model, scaler, features, dm
+def forecast_prices(df, forecast_days=30):
+    """
+    Predict future closing prices using XGBoost.
+    """
 
+    data = df.copy()
+
+    # Keep only Close price
+    data = data[["Close"]]
+
+    # Create time index
+    data["Day"] = range(len(data))
+
+    X = data[["Day"]]
+    y = data["Close"]
+
+    model = XGBRegressor(
+        n_estimators=200,
+        learning_rate=0.05,
+        max_depth=4,
+        random_state=42
+    )
+
+    model.fit(X, y)
+
+    future_days = np.arange(
+        len(data),
+        len(data) + forecast_days
+    ).reshape(-1, 1)
+
+    predictions = model.predict(future_days)
+
+    future_dates = pd.date_range(
+        start=data.index[-1] + pd.Timedelta(days=1),
+        periods=forecast_days,
+        freq="B"
+    )
+
+    forecast_df = pd.DataFrame({
+        "Date": future_dates,
+        "Predicted_Close": predictions
+    })
+
+    return forecast_df
 # ── LOAD ──────────────────────────────────────────────────────
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
