@@ -8,3 +8,4 @@ scikit-learn
 requests
 openai
 langchain
+xgboost==2.1.1
