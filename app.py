@@ -409,11 +409,11 @@ with tab1:
    # ==========================
 
    X_plot = scaler.transform(d_plot[features].values)
-    predictions = model.predict(X_plot)
+   predictions = model.predict(X_plot)
 
-    buy_points = d_plot[predictions == 2]
-    sell_points = d_plot[predictions == 0]
-    forecast_df = forecast_prices(d_plot, forecast_days=30)
+   buy_points = d_plot[predictions == 2]
+   sell_points = d_plot[predictions == 0]
+   forecast_df = forecast_prices(d_plot, forecast_days=30)
 
     fig = make_subplots(
         rows=2,
