@@ -161,15 +161,7 @@ with st.spinner("Training AI model..."):
 # ==========================
 # TEST FORECAST
 # ==========================
-# ==========================
-# AI BUY/SELL PREDICTIONS
-# ==========================
 
-X_plot = scaler.transform(d_plot[features])
-predictions = model.predict(X_plot)
-
-buy_points = d_plot[predictions == 2]
-sell_points = d_plot[predictions == 0]
 forecast_df = forecast_prices(df, forecast_days=30)
 
 st.subheader("🔮 AI Forecast (Next 30 Days)")
@@ -399,7 +391,15 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
     d_plot = dm.tail(days)
+# ==========================
+# AI BUY/SELL PREDICTIONS
+# ==========================
 
+X_plot = scaler.transform(d_plot[features])
+predictions = model.predict(X_plot)
+
+buy_points = d_plot[predictions == 2]
+sell_points = d_plot[predictions == 0]
     # ==========================
     # AI FORECAST
     # ==========================
