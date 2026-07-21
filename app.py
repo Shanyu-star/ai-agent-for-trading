@@ -440,7 +440,7 @@ with tab1:
     # ==========================
 
 forecast_df = forecast_prices(d_plot, forecast_days=30)
-fig = make_subplots(rows=2, cols=1,
+    fig = make_subplots(rows=2, cols=1,
         row_heights=[0.7, 0.3], vertical_spacing=0.05,
         subplot_titles=("Corn Futures Price", "Volume"))
     fig.add_trace(go.Candlestick(
