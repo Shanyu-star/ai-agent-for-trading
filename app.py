@@ -405,6 +405,18 @@ with tab1:
         vertical_spacing=0.05,
         subplot_titles=("Corn Futures Price", "Volume")
     )
+     fig.add_trace(
+         go.Candlestick(
+             x=d_plot.index,
+             open=d_plot["Open"],
+             high=d_plot["High"],
+             low=d_plot["Low"],
+             close=d_plot["Close"],
+             name="Historical Price"
+        ),
+         row=1,
+         col=1
+)
     fig.add_trace(
         go.Candlestick(
             x=forecast_df["Date"],
