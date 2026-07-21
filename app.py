@@ -186,6 +186,25 @@ col2.metric("RSI", f"{dm['rsi'].iloc[-1]:.1f}")
 col3.metric("ATR (Volatility)", f"{dm['atr'].iloc[-1]:.2f}")
 col4.metric("Confidence", f"{conf:.0%}")
 # ==========================
+# ACCOUNT SUMMARY
+# ==========================
+
+portfolio_value = 0
+
+for asset, holding in st.session_state.portfolio.items():
+    portfolio_value += holding["shares"] * current_price
+
+total_account_value = st.session_state.cash + portfolio_value
+
+st.subheader("💰 Account Summary")
+
+a1, a2, a3, a4 = st.columns(4)
+
+a1.metric("Cash", f"${st.session_state.cash:,.2f}")
+a2.metric("Portfolio", f"${portfolio_value:,.2f}")
+a3.metric("Total Account", f"${total_account_value:,.2f}")
+a4.metric("Positions", len(st.session_state.portfolio))
+# ==========================
 # PAPER TRADING
 # ==========================
 # Calculate portfolio value
