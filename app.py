@@ -290,6 +290,46 @@ if buy_clicked:
 
     else:
         st.error("❌ Not enough cash.")
+        # ==========================
+# SELL LOGIC
+# ==========================
+
+if sell_clicked:
+
+    if "CORN" in st.session_state.portfolio:
+
+        holding = st.session_state.portfolio["CORN"]
+
+        if holding["shares"] >= quantity:
+
+            sale_value = current_price * quantity
+
+            # Add money back
+            st.session_state.cash += sale_value
+
+            # Remove shares
+            holding["shares"] -= quantity
+
+            # Save transaction
+            st.session_state.transactions.append({
+                "type": "SELL",
+                "price": current_price,
+                "quantity": quantity
+            })
+
+            # Remove empty position
+            if holding["shares"] == 0:
+                del st.session_state.portfolio["CORN"]
+
+            st.success(f"✅ Sold {quantity} contract(s) at ${current_price:.2f}")
+
+            st.rerun()
+
+        else:
+            st.error("❌ Not enough contracts to sell.")
+
+    else:
+        st.error("❌ You don't own any CORN contracts.")
 # ── SIGNAL BOX ────────────────────────────────────────────────
 sc1, sc2, sc3 = st.columns([1,2,1])
 with sc2:
