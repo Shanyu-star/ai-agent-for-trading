@@ -474,7 +474,7 @@ with tab1:
     fig.add_trace(
         go.Scatter(
             x=forecast_df["Date"],
-            y=forecast_df["Predicted_Close"],
+            y=forecast_df["Close"],
             mode="lines+markers",
             name="🔮 AI Forecast",
             line=dict(
