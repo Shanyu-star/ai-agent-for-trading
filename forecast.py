@@ -94,51 +94,55 @@ def forecast_prices(df, forecast_days=30):
         )
 
         last_price = predicted
-
-    future_dates = pd.date_range(
+            future_dates = pd.date_range(
         start=df.index[-1] + pd.Timedelta(days=1),
         periods=forecast_days,
         freq="B"
     )
 
-future_open = []
-future_high = []
-future_low = []
-future_close = []
-future_volume = []
+    future_open = []
+    future_high = []
+    future_low = []
+    future_close = []
+    future_volume = []
 
-prev_close = data["Close"].iloc[-1]
+    prev_close = data["Close"].iloc[-1]
 
-for close in predictions:
+    for close in predictions:
 
-    open_price = prev_close
+        open_price = prev_close
 
-    spread = abs(close - open_price)
+        spread = abs(close - open_price)
 
-    high = max(open_price, close) + np.random.uniform(0.3, 1.0) * (spread + 2)
+        high = max(open_price, close) + np.random.uniform(
+            0.3, 1.0
+        ) * (spread + 2)
 
-    low = min(open_price, close) - np.random.uniform(0.3, 1.0) * (spread + 2)
+        low = min(open_price, close) - np.random.uniform(
+            0.3, 1.0
+        ) * (spread + 2)
 
-    volume = np.random.randint(
-        int(df["Volume"].tail(20).mean() * 0.8),
-        int(df["Volume"].tail(20).mean() * 1.2)
-    )
+        volume = np.random.randint(
+            int(df["Volume"].tail(20).mean() * 0.8),
+            int(df["Volume"].tail(20).mean() * 1.2)
+        )
 
-    future_open.append(open_price)
-    future_high.append(high)
-    future_low.append(low)
-    future_close.append(close)
-    future_volume.append(volume)
+        future_open.append(open_price)
+        future_high.append(high)
+        future_low.append(low)
+        future_close.append(close)
+        future_volume.append(volume)
 
-    prev_close = close
+        prev_close = close
 
-forecast_df = pd.DataFrame({
-    "Date": future_dates,
-    "Open": future_open,
-    "High": future_high,
-    "Low": future_low,
-    "Close": future_close,
-    "Volume": future_volume
-})
+    forecast_df = pd.DataFrame({
+        "Date": future_dates,
+        "Open": future_open,
+        "High": future_high,
+        "Low": future_low,
+        "Close": future_close,
+        "Volume": future_volume
+    })
 
-return forecast_df
+    return forecast_df
+
