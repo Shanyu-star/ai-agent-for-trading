@@ -431,18 +431,23 @@ st.divider()
 tab1, tab2, tab3 = st.tabs([
     "📈 Price Chart", "📊 Indicators", "💰 Backtest"
 ])
-
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
     d_plot = dm.tail(days)
+
     # ==========================
     # AI FORECAST
     # ==========================
 
-forecast_df = forecast_prices(d_plot, forecast_days=30)
-    fig = make_subplots(rows=2, cols=1,
-        row_heights=[0.7, 0.3], vertical_spacing=0.05,
-        subplot_titles=("Corn Futures Price", "Volume"))
+    forecast_df = forecast_prices(d_plot, forecast_days=30)
+
+    fig = make_subplots(
+        rows=2,
+        cols=1,
+        row_heights=[0.7, 0.3],
+        vertical_spacing=0.05,
+        subplot_titles=("Corn Futures Price", "Volume")
+    )
     fig.add_trace(go.Candlestick(
         x=d_plot.index,
         open=d_plot['Open'], high=d_plot['High'],
