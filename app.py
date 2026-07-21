@@ -7,6 +7,7 @@ from plotly.subplots import make_subplots
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
+from forecast import forecast_prices
 # ── PAGE CONFIG ───────────────────────────────────────────────
 st.set_page_config(
     page_title="Corn Futures AI Trader",
