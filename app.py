@@ -207,7 +207,48 @@ with col_buy:
 with col_sell:
     sell_clicked = st.button("🔴 Sell")
 st.divider()
+# ==========================
+# BUY LOGIC
+# ==========================
 
+if buy_clicked:
+    total_cost = current_price * quantity
+
+    if st.session_state.cash >= total_cost:
+
+        # Deduct cash
+        st.session_state.cash -= total_cost
+
+        # Add stock to portfolio
+        if "CORN" not in st.session_state.portfolio:
+            st.session_state.portfolio["CORN"] = {
+                "shares": 0,
+                "avg_price": current_price
+            }
+
+        holding = st.session_state.portfolio["CORN"]
+
+        total_value = (
+            holding["shares"] * holding["avg_price"]
+        ) + total_cost
+
+        holding["shares"] += quantity
+
+        holding["avg_price"] = total_value / holding["shares"]
+
+        # Save transaction
+        st.session_state.transactions.append({
+            "type": "BUY",
+            "price": current_price,
+            "quantity": quantity
+        })
+
+        st.success(f"✅ Bought {quantity} contract(s) at ${current_price:.2f}")
+
+        st.rerun()
+
+    else:
+        st.error("❌ Not enough cash.")
 # ── SIGNAL BOX ────────────────────────────────────────────────
 sc1, sc2, sc3 = st.columns([1,2,1])
 with sc2:
