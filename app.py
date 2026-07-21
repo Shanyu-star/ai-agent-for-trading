@@ -467,32 +467,34 @@ with tab1:
         x=d_plot.index, y=d_plot['Volume'],
         marker_color=colors, name='Volume'
     ), row=2, col=1)
-# ==========================
-# AI Forecast Line
-# ==========================
+    # ==========================
+    # AI Forecast Line
+    # ==========================
 
-fig.add_trace(
-    go.Scatter(
-        x=forecast_df["Date"],
-        y=forecast_df["Predicted_Close"],
-        mode="lines+markers",
-        name="🔮 AI Forecast",
-        line=dict(
-            color="deepskyblue",
-            width=4,
-            dash="dash"
+    fig.add_trace(
+        go.Scatter(
+            x=forecast_df["Date"],
+            y=forecast_df["Predicted_Close"],
+            mode="lines+markers",
+            name="🔮 AI Forecast",
+            line=dict(
+                color="deepskyblue",
+                width=4,
+                dash="dash"
+            ),
+            marker=dict(size=7)
         ),
-        marker=dict(size=7)
-    ),
-    row=1,
-    col=1
-)
+        row=1,
+        col=1
+    )
+
     fig.update_layout(
-        height=600, template='plotly_dark',
+        height=600,
+        template="plotly_dark",
         xaxis_rangeslider_visible=False
     )
-    st.plotly_chart(fig, use_container_width=True)
 
+    st.plotly_chart(fig, use_container_width=True)
 with tab2:
     d_ind = dm.tail(120)
     fig2 = make_subplots(rows=2, cols=1,
