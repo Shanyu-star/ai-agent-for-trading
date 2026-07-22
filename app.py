@@ -215,6 +215,52 @@ a2.metric("Portfolio", f"${portfolio_value:,.2f}")
 a3.metric("Total Account", f"${total_account_value:,.2f}")
 a4.metric("Positions", len(st.session_state.portfolio))
 # ==========================
+# LOGIN SYSTEM
+# ==========================
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+
+    st.title("🌽 Corn Futures AI Trader")
+
+    choice = st.radio(
+        "Select",
+        ["Login", "Sign Up"]
+    )
+
+    if choice == "Sign Up":
+
+        fullname = st.text_input("Full Name")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+
+        if st.button("Create Account"):
+
+            if create_user(fullname, email, password):
+                st.success("Account created successfully!")
+            else:
+                st.error("Email already exists.")
+
+    else:
+
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+
+        if st.button("Login"):
+
+            user = login_user(email, password)
+
+            if user:
+                st.session_state.logged_in = True
+                st.session_state.user_name = user[1]
+                st.rerun()
+            else:
+                st.error("Invalid Email or Password.")
+
+    st.stop()
+# ==========================
 # PAPER TRADING
 # ==========================
 # Calculate portfolio value
