@@ -27,3 +27,21 @@ def login_user(email, password):
     )
 
     return cursor.fetchone()
+    def login_page():
+
+    st.title("🌽 Corn Futures AI Trader")
+
+    st.subheader("Welcome Back")
+
+    email = st.text_input("Email")
+    password = st.text_input("Password", type="password")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        login = st.button("Login", use_container_width=True)
+
+    with col2:
+        signup = st.button("Create Account", use_container_width=True)
+
+    return login, signup, email, password
