@@ -18,6 +18,44 @@ st.set_page_config(
 )
 st.markdown("""
 <style>
+
+/* First CSS */
+
+/* Login Card */
+.login-card{
+    ...
+}
+
+/* =====================================================
+   GLOBAL THEME
+===================================================== */
+
+:root{
+    ...
+}
+
+#MainMenu{
+    ...
+}
+
+footer{
+    ...
+}
+
+.stApp{
+    ...
+}
+
+.block-container{
+    ...
+}
+
+/* More CSS here */
+
+</style>
+""", unsafe_allow_html=True)
+st.markdown("""
+<style>
             /* Hide only menu and footer */
 #MainMenu {
     visibility: hidden;
