@@ -346,7 +346,7 @@ with st.sidebar:
 
     # ---------- APP INFO ----------
     st.caption("Version 1.0")
-    st.caption("Built with ❤️ using Streamlit & AI")
+    st.caption("Built with ❤️ using Streamlit & STAR")
 
     st.divider()
 
