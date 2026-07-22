@@ -346,7 +346,7 @@ with st.sidebar:
 
     # ---------- APP INFO ----------
     st.caption("Version 1.0")
-    st.caption("Built with ❤️ using Streamlit & STAR")
+    st.caption("Built with ❤️ using Streamlit & AI")
 
     st.divider()
 
@@ -361,8 +361,13 @@ def load_data():
     df = yf.download("ZC=F", period="2y", interval="1d",
                      progress=False, auto_adjust=False)
 
-    df_h = yf.download("ZC=F", period="60d", interval="1h",
-                       progress=False, auto_adjust=False)
+    df_h = yf.download(
+    "ZC=F",
+    period="180d",
+    interval="1h",
+    progress=False,
+    auto_adjust=False
+)
 
     st.write("Daily empty:", df.empty)
     st.write("Hourly empty:", df_h.empty)
@@ -459,8 +464,8 @@ def train_model(df, df_h):
     ]
 
     X = dm[features].values
-    y = dm["target"].values\
-    
+    y = dm["target"].values
+
     st.write("Daily rows:", len(d))
     st.write("Hourly daily rows:", len(dh_daily))
     st.write("Merged rows:", len(dm))
@@ -481,6 +486,7 @@ def train_model(df, df_h):
 
     return model, scaler, features, dm
     
+
 # ── LOAD ──────────────────────────────────────────────────────
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
