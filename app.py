@@ -42,22 +42,39 @@ st.markdown("""
     .hold { background-color: #2a2a1a; color: #ffcc00; border: 2px solid #ffcc00; }
 </style>
 """, unsafe_allow_html=True)
-# ==========================
-# PAPER TRADING SIDEBAR
-# ==========================
 
-st.sidebar.header("💼 Paper Trading")
-
-st.sidebar.metric(
-    "Available Cash",
-    f"${st.session_state.cash:,.2f}"
-)
 # ── HEADER ────────────────────────────────────────────────────
 st.title("🌽 Corn Futures AI Trading Agent")
 st.write(f"💰 Cash: ${st.session_state.cash:,.2f}")
 st.markdown("*Multiscale candlestick analysis powered by machine learning*")
 st.divider()
+# ==========================
+# SIDEBAR
+# ==========================
 
+with st.sidebar:
+
+    st.success(f"👋 Welcome, {st.session_state.user_name}")
+
+    st.markdown("---")
+
+    st.header("💼 Paper Trading")
+
+    st.metric(
+        "Available Cash",
+        f"${st.session_state.cash:,.2f}"
+    )
+
+    st.markdown("---")
+
+    if st.button("🚪 Logout", use_container_width=True):
+        st.session_state.logged_in = False
+        st.session_state.auth_page = "login"
+
+        if "user_name" in st.session_state:
+            del st.session_state.user_name
+
+        st.rerun()
 # ── DATA LOADING ──────────────────────────────────────────────
 @st.cache_data(ttl=3600)
 def load_data():
