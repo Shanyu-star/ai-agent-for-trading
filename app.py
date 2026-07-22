@@ -217,7 +217,7 @@ if not st.session_state.logged_in:
 
     if st.session_state.auth_page == "login":
 
-        left, center, right = st.columns([1, 2, 1])
+        left, center, right = st.columns([2, 3, 2])
 
         with center:
 
@@ -247,7 +247,7 @@ if not st.session_state.logged_in:
 
     else:
 
-        left, center, right = st.columns([1, 2, 1])
+        left, center, right = st.columns([2, 3, 2])
 
         with center:
 
