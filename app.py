@@ -424,19 +424,19 @@ def train_model(df, df_h):
     d.loc[fr >  1.0, 'target'] = 2
     d.loc[fr < -1.0, 'target'] = 0
     d = d.iloc[:-5]
-
     d.index = d.index.tz_localize(None)
+
     dm = d.merge(dh_daily, left_index=True, right_index=True, how="left")
 
-# Fill missing hourly features
-dm[
-    ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
-] = dm[
-    ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
-].ffill()
+    # Fill missing hourly features
+    dm[
+        ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
+    ] = dm[
+        ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
+    ].ffill()
 
-# Remove remaining missing values
-dm = dm.dropna()
+    # Remove remaining missing values
+    dm = dm.dropna()
 
     features = [
         'body','body_pct','upper_wick','lower_wick','direction',
@@ -448,24 +448,30 @@ dm = dm.dropna()
     ]
 
     X = dm[features].values
-    y = dm['target'].values
-if len(X) < 50:
-    raise ValueError(
-        f"Training data is too small ({len(X)} rows). "
-        "Hourly Yahoo Finance data could not be merged correctly."
-    )
+    y = dm["target"].values
+
+    if len(X) < 50:
+        raise ValueError(
+            f"Training data is too small ({len(X)} rows). "
+            "Hourly Yahoo Finance data could not be merged correctly."
+        )
+
     split = int(len(X) * 0.8)
+
     scaler = StandardScaler()
+
     X_train = scaler.fit_transform(X[:split])
-    X_all   = scaler.transform(X)
 
     model = GradientBoostingClassifier(
-        n_estimators=300, max_depth=4,
-        learning_rate=0.05, random_state=42
+        n_estimators=300,
+        learning_rate=0.05,
+        random_state=42
     )
-    model.fit(X_train, y[:split])
-    return model, scaler, features, dm
 
+    model.fit(X_train, y[:split])
+
+    return model, scaler, features, dm
+    
 # ── LOAD ──────────────────────────────────────────────────────
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
