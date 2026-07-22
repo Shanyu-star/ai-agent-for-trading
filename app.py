@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
 from forecast import forecast_prices
 from database import conn, cursor
+from auth import create_user, login_user
 # ── PAGE CONFIG ───────────────────────────────────────────────
 st.set_page_config(
     page_title="Corn Futures AI Trader",
