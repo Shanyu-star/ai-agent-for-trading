@@ -288,6 +288,19 @@ if not st.session_state.logged_in:
             st.rerun()
 
     st.stop()
+    # ==========================
+    # SIDEBAR
+    # ==========================
+
+    with st.sidebar:
+        st.success(f"Welcome, {st.session_state.user_name} 👋")
+
+        st.markdown("---")
+
+        if st.button("🚪 Logout", use_container_width=True):
+            st.session_state.logged_in = False
+            st.session_state.auth_page = "login"
+            st.rerun()
 # ==========================
 # PAPER TRADING
 # ==========================
