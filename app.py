@@ -221,8 +221,6 @@ if not st.session_state.logged_in:
 
         with center:
 
-            st.markdown("<div class='login-card'>", unsafe_allow_html=True)
-
             st.subheader("👋 Welcome Back")
 
             email = st.text_input("Email")
@@ -244,8 +242,6 @@ if not st.session_state.logged_in:
             if st.button("Create New Account", use_container_width=True):
                 st.session_state.auth_page = "signup"
                 st.rerun()
-
-            st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------- SIGNUP PAGE ----------------
 
