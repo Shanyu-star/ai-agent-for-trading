@@ -358,10 +358,21 @@ with st.sidebar:
 # ── DATA LOADING ──────────────────────────────────────────────
 @st.cache_data(ttl=3600)
 def load_data():
-    df = yf.download("ZC=F", period="2y", interval="1d", progress=False)
-    df.columns = [col[0] for col in df.columns]
-    df_h = yf.download("ZC=F", period="730d", interval="1h", progress=False)
-    df_h.columns = [col[0] for col in df_h.columns]
+    df = yf.download("ZC=F", period="2y", interval="1d",
+                     progress=False, auto_adjust=False)
+
+    df_h = yf.download("ZC=F", period="60d", interval="1h",
+                       progress=False, auto_adjust=False)
+
+    st.write("Daily empty:", df.empty)
+    st.write("Hourly empty:", df_h.empty)
+
+    if not df.empty and isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+
+    if not df_h.empty and isinstance(df_h.columns, pd.MultiIndex):
+        df_h.columns = df_h.columns.get_level_values(0)
+
     return df, df_h
 
 @st.cache_resource
