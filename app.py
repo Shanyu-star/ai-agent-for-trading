@@ -426,7 +426,17 @@ def train_model(df, df_h):
     d = d.iloc[:-5]
 
     d.index = d.index.tz_localize(None)
-    dm = d.merge(dh_daily, left_index=True, right_index=True, how='inner').dropna()
+    dm = d.merge(dh_daily, left_index=True, right_index=True, how="left")
+
+# Fill missing hourly features
+dm[
+    ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
+] = dm[
+    ["h_body_pct", "h_rsi", "h_above_ma10", "h_volatility"]
+].ffill()
+
+# Remove remaining missing values
+dm = dm.dropna()
 
     features = [
         'body','body_pct','upper_wick','lower_wick','direction',
@@ -439,6 +449,11 @@ def train_model(df, df_h):
 
     X = dm[features].values
     y = dm['target'].values
+if len(X) < 50:
+    raise ValueError(
+        f"Training data is too small ({len(X)} rows). "
+        "Hourly Yahoo Finance data could not be merged correctly."
+    )
     split = int(len(X) * 0.8)
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X[:split])
