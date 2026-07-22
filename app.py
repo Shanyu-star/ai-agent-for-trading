@@ -10,6 +10,12 @@ from xgboost import XGBRegressor
 from forecast import forecast_prices
 from database import conn, cursor
 from auth import create_user, login_user
+st.set_page_config(
+    page_title="Corn Futures AI Trader",
+    page_icon="🌽",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 # ── PAGE CONFIG ───────────────────────────────────────────────
 st.set_page_config(
     page_title="Corn Futures AI Trader",
