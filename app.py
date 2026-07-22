@@ -174,6 +174,100 @@ hr{
 </style>
 """, unsafe_allow_html=True)
 # ==========================
+# LOGIN SYSTEM
+# ==========================
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if "auth_page" not in st.session_state:
+    st.session_state.auth_page = "login"
+
+if not st.session_state.logged_in:
+
+    st.markdown("""
+<div class='main-title'>
+🌽 Corn Futures AI
+</div>
+
+<div class='sub-title'>
+AI Powered Agricultural Futures Trading Platform
+</div>
+""", unsafe_allow_html=True)
+    # ---------------- LOGIN PAGE ----------------
+
+    if st.session_state.auth_page == "login":
+
+        st.subheader("Welcome Back")
+
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+
+        if st.button("Login", use_container_width=True):
+
+            user = login_user(email, password)
+
+            if user:
+                st.session_state.logged_in = True
+                st.session_state.user_name = user[1]
+                st.rerun()
+            else:
+                st.error("Invalid Email or Password")
+
+        st.markdown("---")
+
+        if st.button("Create New Account", use_container_width=True):
+            st.session_state.auth_page = "signup"
+            st.rerun()
+            
+
+    # ---------------- SIGNUP PAGE ----------------
+
+    else:
+
+        st.subheader("Create Account")
+
+        fullname = st.text_input("Full Name")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        confirm = st.text_input("Confirm Password", type="password")
+
+        if st.button("Create Account", use_container_width=True):
+
+            if password != confirm:
+                st.error("Passwords do not match.")
+
+            else:
+                if create_user(fullname, email, password):
+                    st.success("Account created successfully!")
+
+                    st.session_state.auth_page = "login"
+                    st.rerun()
+
+                else:
+                    st.error("Email already exists.")
+
+        st.markdown("---")
+
+        if st.button("Back to Login", use_container_width=True):
+            st.session_state.auth_page = "login"
+            st.rerun()
+
+    st.stop()
+    # ==========================
+    # SIDEBAR
+    # ==========================
+
+    with st.sidebar:
+        st.success(f"Welcome, {st.session_state.user_name} 👋")
+
+        st.markdown("---")
+
+        if st.button("🚪 Logout", use_container_width=True):
+            st.session_state.logged_in = False
+            st.session_state.auth_page = "login"
+            st.rerun()
+# ==========================
 # PAPER TRADING SESSION
 # ==========================
 
