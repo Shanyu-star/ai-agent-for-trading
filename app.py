@@ -174,6 +174,24 @@ hr{
 </style>
 """, unsafe_allow_html=True)
 # ==========================
+# SESSION STATE
+# ==========================
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if "auth_page" not in st.session_state:
+    st.session_state.auth_page = "login"
+
+if "cash" not in st.session_state:
+    st.session_state.cash = 100000.0
+
+if "portfolio" not in st.session_state:
+    st.session_state.portfolio = {}
+
+if "transactions" not in st.session_state:
+    st.session_state.transactions = []
+# ==========================
 # LOGIN SYSTEM
 # ==========================
 
