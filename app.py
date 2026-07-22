@@ -346,7 +346,7 @@ with st.sidebar:
 
     # ---------- APP INFO ----------
     st.caption("Version 1.0")
-    st.caption("Built with ❤️ using Streamlit & AI")
+    st.caption("Built with ❤️ using Streamlit & STAR")
 
     st.divider()
 
@@ -465,10 +465,6 @@ def train_model(df, df_h):
 
     X = dm[features].values
     y = dm["target"].values
-
-    st.write("Daily rows:", len(d))
-    st.write("Hourly daily rows:", len(dh_daily))
-    st.write("Merged rows:", len(dm))
 
     split = int(len(X) * 0.8)
 
