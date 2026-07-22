@@ -15,6 +15,46 @@ st.set_page_config(
     page_icon="🌽",
     layout="wide",
     initial_sidebar_state="expanded"
+    st.markdown("""
+<style>
+
+/* Hide Streamlit header and footer */
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
+
+/* Main background */
+.stApp{
+    background-color:#0b1220;
+}
+
+/* Main title */
+.main-title{
+    font-size:48px;
+    font-weight:700;
+    color:white;
+    text-align:center;
+    margin-top:30px;
+}
+
+.sub-title{
+    color:#9ca3af;
+    text-align:center;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+/* Login Card */
+.login-card{
+    background:#1a2235;
+    padding:35px;
+    border-radius:18px;
+    border:1px solid #2b3754;
+    box-shadow:0 0 25px rgba(0,0,0,.35);
+}
+
+</style>
+""", unsafe_allow_html=True)
 )
 # ==========================
 # LOGIN SYSTEM
