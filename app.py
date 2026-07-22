@@ -448,8 +448,12 @@ def train_model(df, df_h):
     ]
 
     X = dm[features].values
-    y = dm["target"].values
-
+    y = dm["target"].values\
+    
+    st.write("Daily rows:", len(d))
+    st.write("Hourly daily rows:", len(dh_daily))
+    st.write("Merged rows:", len(dm))
+    
     if len(X) < 50:
         raise ValueError(
             f"Training data is too small ({len(X)} rows). "
