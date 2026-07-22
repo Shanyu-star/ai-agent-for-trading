@@ -369,8 +369,7 @@ def load_data():
     auto_adjust=False
 )
 
-    st.write("Daily empty:", df.empty)
-    st.write("Hourly empty:", df_h.empty)
+   
 
     if not df.empty and isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.get_level_values(0)
