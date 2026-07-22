@@ -186,154 +186,102 @@ if "auth_page" not in st.session_state:
 if not st.session_state.logged_in:
 
     st.markdown("""
-<div class='main-title'>
-🌽 Corn Futures AI
-</div>
+    <div class='main-title'>
+    🌽 Corn Futures AI
+    </div>
 
-<div class='sub-title'>
-AI Powered Agricultural Futures Trading Platform
-</div>
-""", unsafe_allow_html=True)
-    
+    <div class='sub-title'>
+    AI Powered Agricultural Futures Trading Platform
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------------- LOGIN PAGE ----------------
+
     if st.session_state.auth_page == "login":
 
         left, center, right = st.columns([1, 2, 1])
 
         with center:
 
-         st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+            st.markdown("<div class='login-card'>", unsafe_allow_html=True)
 
-         st.subheader("👋 Welcome Back")
+            st.subheader("👋 Welcome Back")
 
-        email = st.text_input("Email")
-        password = st.text_input("Password", type="password")
+            email = st.text_input("Email")
+            password = st.text_input("Password", type="password")
 
-        if st.button("Login", use_container_width=True):
+            if st.button("Login", use_container_width=True):
 
-            user = login_user(email, password)
+                user = login_user(email, password)
 
-            if user:
-                st.session_state.logged_in = True
-                st.session_state.user_name = user[1]
+                if user:
+                    st.session_state.logged_in = True
+                    st.session_state.user_name = user[1]
+                    st.rerun()
+                else:
+                    st.error("Invalid Email or Password")
+
+            st.markdown("---")
+
+            if st.button("Create New Account", use_container_width=True):
+                st.session_state.auth_page = "signup"
                 st.rerun()
-            else:
-                st.error("Invalid Email or Password")
 
-        st.markdown("---")
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        if st.button("Create New Account", use_container_width=True):
-            st.session_state.auth_page = "signup"
-            st.rerun()
+    # ---------------- SIGNUP PAGE ----------------
 
-        st.markdown("</div>", unsafe_allow_html=True)
     else:
 
         left, center, right = st.columns([1, 2, 1])
 
-    with center:
+        with center:
 
-        st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+            st.markdown("<div class='login-card'>", unsafe_allow_html=True)
 
-        st.subheader("📝 Create Account")
+            st.subheader("📝 Create Account")
 
-        fullname = st.text_input("Full Name")
-        email = st.text_input("Email")
-        password = st.text_input("Password", type="password")
-        confirm = st.text_input("Confirm Password", type="password")
+            fullname = st.text_input("Full Name")
+            email = st.text_input("Email")
+            password = st.text_input("Password", type="password")
+            confirm = st.text_input("Confirm Password", type="password")
 
-        if st.button("Create Account", use_container_width=True):
+            if st.button("Create Account", use_container_width=True):
 
-            if password != confirm:
-                st.error("Passwords do not match.")
-
-            else:
-                if create_user(fullname, email, password):
-                    st.success("Account created successfully!")
-                    st.session_state.auth_page = "login"
-                    st.rerun()
+                if password != confirm:
+                    st.error("Passwords do not match.")
 
                 else:
-                    st.error("Email already exists.")
+                    if create_user(fullname, email, password):
+                        st.success("Account created successfully!")
+                        st.session_state.auth_page = "login"
+                        st.rerun()
+                    else:
+                        st.error("Email already exists.")
 
-        st.markdown("---")
+            st.markdown("---")
 
-        if st.button("Back to Login", use_container_width=True):
-            st.session_state.auth_page = "login"
-            st.rerun()
+            if st.button("Back to Login", use_container_width=True):
+                st.session_state.auth_page = "login"
+                st.rerun()
 
-        st.markdown("</div>", unsafe_allow_html=True)
-    
-    # ==========================
-    # SIDEBAR
-    # ==========================
+            st.markdown("</div>", unsafe_allow_html=True)
 
-    with st.sidebar:
-        st.success(f"Welcome, {st.session_state.user_name} 👋")
+    st.stop()
 
-        st.markdown("---")
-
-        if st.button("🚪 Logout", use_container_width=True):
-            st.session_state.logged_in = False
-            st.session_state.auth_page = "login"
-            st.rerun()
-# ==========================
-# PAPER TRADING SESSION
-# ==========================
-
-if "cash" not in st.session_state:
-    st.session_state.cash = 100000.0
-
-if "portfolio" not in st.session_state:
-    st.session_state.portfolio = {}
-
-if "transactions" not in st.session_state:
-    st.session_state.transactions = []
-# ── STYLES ────────────────────────────────────────────────────
-st.markdown("""
-<style>
-    .main { background-color: #0e1117; }
-    .signal-box {
-        padding: 20px; border-radius: 12px;
-        text-align: center; font-size: 28px;
-        font-weight: bold; margin: 10px 0;
-    }
-    .buy  { background-color: #1a4731; color: #00ff88; border: 2px solid #00ff88; }
-    .sell { background-color: #4a1a1a; color: #ff4444; border: 2px solid #ff4444; }
-    .hold { background-color: #2a2a1a; color: #ffcc00; border: 2px solid #ffcc00; }
-</style>
-""", unsafe_allow_html=True)
-
-# ── HEADER ────────────────────────────────────────────────────
-st.title("🌽 Corn Futures AI Trading Agent")
-st.write(f"💰 Cash: ${st.session_state.cash:,.2f}")
-st.markdown("*Multiscale candlestick analysis powered by machine learning*")
-st.divider()
 # ==========================
 # SIDEBAR
 # ==========================
 
 with st.sidebar:
 
-    st.success(f"👋 Welcome, {st.session_state.user_name}")
-
-    st.markdown("---")
-
-    st.header("💼 Paper Trading")
-
-    st.metric(
-        "Available Cash",
-        f"${st.session_state.cash:,.2f}"
-    )
+    st.success(f"Welcome, {st.session_state.user_name} 👋")
 
     st.markdown("---")
 
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.auth_page = "login"
-
-        if "user_name" in st.session_state:
-            del st.session_state.user_name
-
         st.rerun()
 # ── DATA LOADING ──────────────────────────────────────────────
 @st.cache_data(ttl=3600)
