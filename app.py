@@ -291,17 +291,66 @@ if not st.session_state.logged_in:
             st.markdown("</div>", unsafe_allow_html=True)
 
     st.stop()
-
 # ==========================
 # SIDEBAR
 # ==========================
 
 with st.sidebar:
 
-    st.success(f"Welcome, {st.session_state.user_name} 👋")
+    # ---------- LOGO ----------
+    st.markdown("## 🌽 Corn Futures AI")
+    st.caption("AI Powered Trading Platform")
 
-    st.markdown("---")
+    st.divider()
 
+    # ---------- USER ----------
+    st.markdown("### 👤 User")
+
+    st.success(f"Welcome, {st.session_state.user_name}")
+
+    st.caption("🟢 Online")
+
+    st.divider()
+
+    # ---------- NAVIGATION ----------
+    page = st.radio(
+        "Navigation",
+        [
+            "🏠 Dashboard",
+            "📈 Trading",
+            "📊 Portfolio",
+            "📉 Forecast",
+            "📜 Trade History",
+            "🤖 AI Insights",
+        ],
+        label_visibility="collapsed",
+    )
+
+    st.divider()
+
+    # ---------- ACCOUNT ----------
+    st.markdown("### ⚙ Account")
+
+    account_page = st.radio(
+        "",
+        [
+            "👤 My Profile",
+            "⚙ Settings",
+            "❓ Help",
+            "📄 About",
+        ],
+        label_visibility="collapsed",
+    )
+
+    st.divider()
+
+    # ---------- APP INFO ----------
+    st.caption("Version 1.0")
+    st.caption("Built with ❤️ using Streamlit & AI")
+
+    st.divider()
+
+    # ---------- LOGOUT ----------
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.auth_page = "login"
