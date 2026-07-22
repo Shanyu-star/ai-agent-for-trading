@@ -212,16 +212,7 @@ if "auth_page" not in st.session_state:
     st.session_state.auth_page = "login"
 
 if not st.session_state.logged_in:
-
-    st.markdown("""
-    <div class='main-title'>
-    🌽 Corn Futures AI
-    </div>
-
-    <div class='sub-title'>
-    AI Powered Agricultural Futures Trading Platform
-    </div>
-    """, unsafe_allow_html=True)
+   
     
 
     # ---------------- LOGIN PAGE ----------------
