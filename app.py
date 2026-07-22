@@ -18,11 +18,14 @@ st.set_page_config(
 )
 st.markdown("""
 <style>
+            /* Hide only menu and footer */
+#MainMenu {
+    visibility: hidden;
+}
 
-/* Hide Streamlit header and footer */
-#MainMenu {visibility:hidden;}
-footer {visibility:hidden;}
-header {visibility:hidden;}
+footer {
+    visibility: hidden;
+}
 
 /* Main background */
 .stApp{
