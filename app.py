@@ -17,6 +17,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 st.markdown("""
+<div class='main-title'>
+🌽 Corn Futures AI
+</div>
+
+<div class='sub-title'>
+AI Powered Agricultural Futures Trading Platform
+</div>
+""", unsafe_allow_html=True)
+
+st.write("")
+st.markdown("""
 <style>
 
 /* ============================================================
@@ -75,8 +86,7 @@ footer {
     font-size: 18px;
     margin-bottom: 35px;
 }
-
-
+            
 /* ============================================================
    LOGIN CARD
 ============================================================ */
@@ -212,6 +222,7 @@ if not st.session_state.logged_in:
     AI Powered Agricultural Futures Trading Platform
     </div>
     """, unsafe_allow_html=True)
+    
 
     # ---------------- LOGIN PAGE ----------------
 
@@ -221,7 +232,8 @@ if not st.session_state.logged_in:
 
         with center:
 
-            st.subheader("👋 Welcome Back")
+            st.subheader("###👋 Welcome Back")
+            st.caption("Sign in to continue to your trading dashboard")
 
             email = st.text_input("Email")
             password = st.text_input("Password", type="password")
