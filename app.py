@@ -223,7 +223,7 @@ if not st.session_state.logged_in:
 
         with center:
 
-            st.subheader("###👋 Welcome Back")
+            st.subheader("👋 Welcome Back")
             st.caption("Sign in to continue to your trading dashboard")
 
             email = st.text_input("Email")
