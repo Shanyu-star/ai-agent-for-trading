@@ -194,11 +194,16 @@ if not st.session_state.logged_in:
 AI Powered Agricultural Futures Trading Platform
 </div>
 """, unsafe_allow_html=True)
-    # ---------------- LOGIN PAGE ----------------
-
+    
     if st.session_state.auth_page == "login":
 
-        st.subheader("Welcome Back")
+        left, center, right = st.columns([1, 2, 1])
+
+        with center:
+
+         st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+
+         st.subheader("👋 Welcome Back")
 
         email = st.text_input("Email")
         password = st.text_input("Password", type="password")
@@ -219,13 +224,17 @@ AI Powered Agricultural Futures Trading Platform
         if st.button("Create New Account", use_container_width=True):
             st.session_state.auth_page = "signup"
             st.rerun()
-            
 
-    # ---------------- SIGNUP PAGE ----------------
-
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
 
-        st.subheader("Create Account")
+        left, center, right = st.columns([1, 2, 1])
+
+    with center:
+
+        st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+
+        st.subheader("📝 Create Account")
 
         fullname = st.text_input("Full Name")
         email = st.text_input("Email")
@@ -240,7 +249,6 @@ AI Powered Agricultural Futures Trading Platform
             else:
                 if create_user(fullname, email, password):
                     st.success("Account created successfully!")
-
                     st.session_state.auth_page = "login"
                     st.rerun()
 
@@ -253,7 +261,8 @@ AI Powered Agricultural Futures Trading Platform
             st.session_state.auth_page = "login"
             st.rerun()
 
-    st.stop()
+        st.markdown("</div>", unsafe_allow_html=True)
+    
     # ==========================
     # SIDEBAR
     # ==========================
