@@ -68,8 +68,15 @@ if "auth_page" not in st.session_state:
 
 if not st.session_state.logged_in:
 
-    st.title("🌽 Corn Futures AI Trader")
-    st.markdown("### AI Powered Corn Futures Trading Platform")
+    st.markdown("""
+<div class='main-title'>
+🌽 Corn Futures AI
+</div>
+
+<div class='sub-title'>
+AI Powered Agricultural Futures Trading Platform
+</div>
+""", unsafe_allow_html=True)
     # ---------------- LOGIN PAGE ----------------
 
     if st.session_state.auth_page == "login":
@@ -95,6 +102,7 @@ if not st.session_state.logged_in:
         if st.button("Create New Account", use_container_width=True):
             st.session_state.auth_page = "signup"
             st.rerun()
+            
 
     # ---------------- SIGNUP PAGE ----------------
 
