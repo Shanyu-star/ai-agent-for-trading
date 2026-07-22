@@ -15,7 +15,9 @@ def create_user(fullname, email, password):
         return True
     except:
         return False
-        def login_user(email, password):
+
+
+def login_user(email, password):
     cursor.execute(
         """
         SELECT * FROM users
@@ -30,7 +32,6 @@ def create_user(fullname, email, password):
 def login_page():
 
     st.title("🌽 Corn Futures AI Trader")
-
     st.subheader("Welcome Back")
 
     email = st.text_input("Email")
