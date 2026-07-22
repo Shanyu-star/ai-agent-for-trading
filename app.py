@@ -464,12 +464,6 @@ def train_model(df, df_h):
     st.write("Daily rows:", len(d))
     st.write("Hourly daily rows:", len(dh_daily))
     st.write("Merged rows:", len(dm))
-    
-    if len(X) < 50:
-        raise ValueError(
-            f"Training data is too small ({len(X)} rows). "
-            "Hourly Yahoo Finance data could not be merged correctly."
-        )
 
     split = int(len(X) * 0.8)
 
