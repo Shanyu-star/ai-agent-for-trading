@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
+import joblib
+import os
 
 np.random.seed(42)
 
@@ -35,6 +37,11 @@ def forecast_prices(df, forecast_days=30):
     # -----------------------------
     # Train model
     # -----------------------------
+    model_path = "models/corn_model.pkl"
+
+if os.path.exists(model_path):
+    model = joblib.load(model_path)
+else:
     model = XGBRegressor(
         n_estimators=200,
         learning_rate=0.05,
@@ -43,6 +50,8 @@ def forecast_prices(df, forecast_days=30):
     )
 
     model.fit(X, y)
+
+    joblib.dump(model, model_path)
 
     # -----------------------------
     # Forecast
