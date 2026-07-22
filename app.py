@@ -212,6 +212,7 @@ if "auth_page" not in st.session_state:
     st.session_state.auth_page = "login"
 
 if not st.session_state.logged_in:
+
    
     
 
@@ -223,11 +224,16 @@ if not st.session_state.logged_in:
 
         with center:
 
-            st.subheader("👋 Welcome Back")
-            st.caption("Sign in to continue to your trading dashboard")
+            email = st.text_input(
+    "📧 Email Address",
+    key="login_email"
+)
 
-            email = st.text_input("Email")
-            password = st.text_input("Password", type="password")
+            password = st.text_input(
+    "🔒 Password",
+    type="password",
+    key="login_password"
+)
 
             if st.button("Login", use_container_width=True):
 
@@ -240,7 +246,7 @@ if not st.session_state.logged_in:
                 else:
                     st.error("Invalid Email or Password")
 
-            st.markdown("---")
+            st.caption("Don't have an account?")
 
             if st.button("Create New Account", use_container_width=True):
                 st.session_state.auth_page = "signup"
