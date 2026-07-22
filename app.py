@@ -16,12 +16,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
-# ── PAGE CONFIG ───────────────────────────────────────────────
-st.set_page_config(
-    page_title="Corn Futures AI Trader",
-    page_icon="🌽",
-    layout="wide"
-)
 # ==========================
 # PAPER TRADING SESSION
 # ==========================
@@ -220,6 +214,7 @@ a1.metric("Cash", f"${st.session_state.cash:,.2f}")
 a2.metric("Portfolio", f"${portfolio_value:,.2f}")
 a3.metric("Total Account", f"${total_account_value:,.2f}")
 a4.metric("Positions", len(st.session_state.portfolio))
+
 # ==========================
 # LOGIN SYSTEM
 # ==========================
@@ -234,7 +229,6 @@ if not st.session_state.logged_in:
 
     st.title("🌽 Corn Futures AI Trader")
     st.markdown("### AI Powered Corn Futures Trading Platform")
-
     # ---------------- LOGIN PAGE ----------------
 
     if st.session_state.auth_page == "login":
