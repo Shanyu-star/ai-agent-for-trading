@@ -1,8 +1,8 @@
-import pandas as pd
-import numpy as np
-from xgboost import XGBRegressor
-import joblib
 import os
+import joblib
+import numpy as np
+import pandas as pd
+from xgboost import XGBRegressor
 
 np.random.seed(42)
 
@@ -10,16 +10,18 @@ np.random.seed(42)
 def forecast_prices(df, forecast_days=30):
     """
     Forecast future OHLC prices using XGBoost.
-    Returns:
+
+    Returns
+    -------
+    DataFrame
         Date, Open, High, Low, Close, Volume
     """
 
     # -----------------------------
-    # Prepare data
+    # Prepare Data
     # -----------------------------
     data = df[["Open", "High", "Low", "Close", "Volume"]].copy()
 
-    # Features
     data["lag1"] = data["Close"].shift(1)
     data["lag2"] = data["Close"].shift(2)
     data["lag3"] = data["Close"].shift(3)
@@ -35,26 +37,31 @@ def forecast_prices(df, forecast_days=30):
     y = data["Close"]
 
     # -----------------------------
-    # Train model
+    # Create models folder
     # -----------------------------
+    os.makedirs("models", exist_ok=True)
+
     model_path = "models/corn_model.pkl"
 
-if os.path.exists(model_path):
-    model = joblib.load(model_path)
-else:
-    model = XGBRegressor(
-        n_estimators=200,
-        learning_rate=0.05,
-        max_depth=4,
-        random_state=42
-    )
+    # -----------------------------
+    # Train or Load Model
+    # -----------------------------
+    if os.path.exists(model_path):
+        model = joblib.load(model_path)
+    else:
+        model = XGBRegressor(
+            n_estimators=200,
+            learning_rate=0.05,
+            max_depth=4,
+            random_state=42,
+        )
 
-    model.fit(X, y)
+        model.fit(X, y)
 
-    joblib.dump(model, model_path)
+        joblib.dump(model, model_path)
 
     # -----------------------------
-    # Forecast
+    # Forecast Future Close Prices
     # -----------------------------
     history = data.copy()
 
@@ -77,14 +84,14 @@ else:
             "MA20": history["Close"].tail(20).mean()
         }])
 
-        base = model.predict(sample)[0]
+        base_prediction = model.predict(sample)[0]
 
         noise = np.random.normal(
             0,
             recent_volatility * history.iloc[-1]["Close"] * 0.5
         )
 
-        prediction = base + trend * day + noise
+        prediction = base_prediction + trend * day + noise
 
         predictions.append(prediction)
 
@@ -97,7 +104,7 @@ else:
         )
 
     # -----------------------------
-    # Future dates
+    # Future Dates
     # -----------------------------
     future_dates = pd.date_range(
         start=df.index[-1] + pd.Timedelta(days=1),
@@ -106,7 +113,7 @@ else:
     )
 
     # -----------------------------
-    # Build Future Candles
+    # Generate Future Candles
     # -----------------------------
     avg_volume = int(df["Volume"].tail(20).mean())
 
@@ -147,6 +154,9 @@ else:
 
         previous_close = close
 
+    # -----------------------------
+    # Final Forecast DataFrame
+    # -----------------------------
     forecast_df = pd.DataFrame({
         "Date": future_dates,
         "Open": future_open,
