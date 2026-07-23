@@ -533,7 +533,7 @@ if page == "🏠 Dashboard":
         portfolio_value,
     )
 
-if page == "📈 Trading":
+elif page == "📈 Trading":
     show_trading(current_price)
 
 elif page == "📊 Portfolio":
