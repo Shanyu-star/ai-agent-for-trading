@@ -18,6 +18,7 @@ from ui.portfolio import show_portfolio
 from ui.trading import show_trading
 from ui.history import show_history
 from ui.forecast_page import show_forecast
+from ui.insights import show_insights
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
@@ -548,7 +549,12 @@ elif page == "📜 Trade History":
     show_history()
 
 elif page == "🤖 AI Insights":
-    pass
+    show_insights(
+        sig_icon,
+        sig_label,
+        conf,
+        proba
+    )
 # Load data
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
