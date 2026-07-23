@@ -13,17 +13,7 @@ from auth import create_user, login_user
 import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
-from ui.dashboard import show_dashboard
 
-if page == "🏠 Dashboard":
-    show_dashboard(
-        dm,
-        current_price,
-        conf,
-        sig_label,
-        sig_icon,
-        st.session_state
-    )
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
@@ -582,26 +572,7 @@ total_account_value = (
     st.session_state.cash + portfolio_value
 )
 
-# -----------------------------
-# Navigation
-# -----------------------------
-if page == "🏠 Dashboard":
-    pass
-
-elif page == "📈 Trading":
-    pass
-
-elif page == "📊 Portfolio":
-    pass
-
-elif page == "📉 Forecast":
-    pass
-
-elif page == "📜 Trade History":
-    pass
-
-elif page == "🤖 AI Insights":
-    pass# ==========================
+# ==========================
 # PAPER TRADING
 # ==========================
 # Calculate portfolio value
