@@ -522,16 +522,21 @@ portfolio_value = sum(
 total_account_value = (
     st.session_state.cash + portfolio_value
 )
-# Load data
+st.write("✅ Step 1: Before load_data()")
+
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
 
-# Train / load model
+st.write("✅ Step 2: load_data() completed")
+
 with st.spinner("Preparing AI model..."):
     model, scaler, features, dm = train_model(df, df_h)
 
-# Generate forecast once
+st.write("✅ Step 3: train_model() completed")
+
 forecast_df = forecast_prices(df, forecast_days=30)
+
+st.write("✅ Step 4: forecast_prices() completed")
 
 # Global values shared by all pages
 latest = dm[features].iloc[-1].values
