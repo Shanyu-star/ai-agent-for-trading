@@ -13,13 +13,6 @@ from auth import create_user, login_user
 import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
-
-st.set_page_config(
-    page_title="Corn Futures AI Trader",
-    page_icon="🌽",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 st.markdown("""
 <div class='main-title'>
 🌽 Corn Futures AI
