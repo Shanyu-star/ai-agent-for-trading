@@ -13,7 +13,13 @@ from auth import create_user, login_user
 import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
-from ui.trading import show_trading
+
+st.set_page_config(
+    page_title="Corn Futures AI Trader",
+    page_icon="🌽",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 st.markdown("""
 <div class='main-title'>
 🌽 Corn Futures AI
@@ -516,10 +522,17 @@ total_account_value = (
 # Navigation
 # -----------------------------
 if page == "🏠 Dashboard":
-    pass
+    show_dashboard(
+        dm,
+        current_price,
+        conf,
+        sig_label,
+        sig_icon,
+        portfolio_value,
+    )
 
-elif page == "📈 Trading":
-    pass
+if page == "📈 Trading":
+    show_trading(current_price)
 
 elif page == "📊 Portfolio":
     pass
