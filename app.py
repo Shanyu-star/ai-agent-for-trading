@@ -582,24 +582,6 @@ total_account_value = (
 )
 
 # ==========================
-# PAPER TRADING
-# ==========================
-# Calculate portfolio value
-portfolio_value = 0
-
-for asset, holding in st.session_state.portfolio.items():
-    portfolio_value += holding["shares"] * current_price
-st.subheader("💼 Paper Trading")
-
-quantity = st.number_input(
-    "Quantity",
-    min_value=1,
-    value=1,
-    step=1
-)
-
-
-# ==========================
 # PORTFOLIO
 # ==========================
 
