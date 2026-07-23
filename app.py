@@ -16,6 +16,7 @@ from streamlit_autorefresh import st_autorefresh
 from ui.dashboard import show_dashboard
 from ui.portfolio import show_portfolio
 from ui.trading import show_trading
+from ui.history import show_history
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
@@ -541,9 +542,9 @@ elif page == "📊 Portfolio":
 
 elif page == "📉 Forecast":
     pass
-
+    
 elif page == "📜 Trade History":
-    pass
+    show_history()
 
 elif page == "🤖 AI Insights":
     pass
