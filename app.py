@@ -519,34 +519,6 @@ portfolio_value = sum(
 total_account_value = (
     st.session_state.cash + portfolio_value
 )
-
-# -----------------------------
-# Navigation
-# -----------------------------
-if page == "🏠 Dashboard":
-    show_dashboard(
-        dm,
-        current_price,
-        conf,
-        sig_label,
-        sig_icon,
-        portfolio_value,
-    )
-
-elif page == "📈 Trading":
-    show_trading(current_price)
-
-elif page == "📊 Portfolio":
-    show_portfolio(current_price)
-
-elif page == "📉 Forecast":
-    pass
-
-elif page == "📜 Trade History":
-    pass
-
-elif page == "🤖 AI Insights":
-    pass
 # Load data
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
@@ -583,14 +555,46 @@ portfolio_value = sum(
 total_account_value = (
     st.session_state.cash + portfolio_value
 )
+# ==========================================================
+# PAGE NAVIGATION
+# ==========================================================
 
+if page == "🏠 Dashboard":
+    show_dashboard(
+        dm=dm,
+        current_price=current_price,
+        conf=conf,
+        sig_label=sig_label,
+        sig_icon=sig_icon,
+        portfolio_value=portfolio_value,
+    )
+
+elif page == "📈 Trading":
+    show_trading(current_price)
+
+elif page == "📊 Portfolio":
+    show_portfolio(current_price)
+
+elif page == "📉 Forecast":
+    show_forecast(forecast_df)
+
+elif page == "📜 Trade History":
+    show_history()
+
+elif page == "🤖 AI Insights":
+    show_insights(
+        sig_icon=sig_icon,
+        sig_label=sig_label,
+        conf=conf,
+        proba=proba,
+    )
 # ── CHARTS ────────────────────────────────────────────────────
 tab1, tab2, tab3 = st.tabs([
     "📈 Price Chart", "📊 Indicators", "💰 Backtest"
 ])
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
-    d_plot = dm.tail(days)324
+    d_plot = dm.tail(days)
     # ==========================
     # AI BUY/SELL PREDICTIONS
     # ==========================
