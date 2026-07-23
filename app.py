@@ -598,14 +598,7 @@ quantity = st.number_input(
     step=1
 )
 
-col_buy, col_sell = st.columns(2)
 
-with col_buy:
-    buy_clicked = st.button("🟢 Buy")
-
-with col_sell:
-    sell_clicked = st.button("🔴 Sell")
-st.divider()
 # ==========================
 # PORTFOLIO
 # ==========================
