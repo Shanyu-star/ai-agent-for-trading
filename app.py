@@ -14,8 +14,11 @@ import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
 from ui.dashboard import show_dashboard
-from ui.portfolio import show_portfolio
 from ui.trading import show_trading
+from ui.portfolio import show_portfolio
+from ui.history import show_history
+from ui.forecast_page import show_forecast
+from ui.insights import show_insights
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
