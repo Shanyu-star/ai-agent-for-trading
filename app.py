@@ -16,9 +16,6 @@ from streamlit_autorefresh import st_autorefresh
 from ui.dashboard import show_dashboard
 from ui.portfolio import show_portfolio
 from ui.trading import show_trading
-from ui.history import show_history
-from ui.forecast_page import show_forecast
-from ui.insights import show_insights
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
@@ -543,18 +540,13 @@ elif page == "📊 Portfolio":
     show_portfolio(current_price)
 
 elif page == "📉 Forecast":
-    show_forecast(forecast_df)
-    
+    pass
+
 elif page == "📜 Trade History":
-    show_history()
+    pass
 
 elif page == "🤖 AI Insights":
-    show_insights(
-        sig_icon,
-        sig_label,
-        conf,
-        proba
-    )
+    pass
 # Load data
 with st.spinner("Loading corn futures data..."):
     df, df_h = load_data()
@@ -562,6 +554,9 @@ with st.spinner("Loading corn futures data..."):
 # Train / load model
 with st.spinner("Preparing AI model..."):
     model, scaler, features, dm = train_model(df, df_h)
+
+# Generate forecast once
+forecast_df = forecast_prices(df, forecast_days=30)
 
 # Global values shared by all pages
 latest = dm[features].iloc[-1].values
@@ -595,7 +590,7 @@ tab1, tab2, tab3 = st.tabs([
 ])
 with tab1:
     days = st.slider("Days to show", 30, 365, 120)
-    d_plot = dm.tail(days)
+    d_plot = dm.tail(days)324
     # ==========================
     # AI BUY/SELL PREDICTIONS
     # ==========================
