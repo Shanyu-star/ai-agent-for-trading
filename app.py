@@ -486,65 +486,70 @@ def train_model(df, df_h):
     
 
 # ── LOAD ──────────────────────────────────────────────────────
-with st.spinner("Loading corn futures data..."):
-    df, df_h = load_data()
+    with st.spinner("Loading corn futures data..."):
+        df, df_h = load_data()
 
-with st.spinner("Training AI model..."):
-    model, scaler, features, dm = train_model(df, df_h)
-# ==========================
-# TEST FORECAST
-# ==========================
 
-forecast_df = forecast_prices(df, forecast_days=30)
+    with st.spinner("Training AI model..."):
+            model, scaler, features, dm = train_model(df, df_h)
+            
+    if page == "🏠 Dashboard":
 
-st.subheader("🔮 AI Forecast (Next 30 Days)")
-st.dataframe(forecast_df)
-# ── CURRENT SIGNAL ────────────────────────────────────────────
-latest = dm[features].iloc[-1].values
-X_latest = scaler.transform([latest])
-proba    = model.predict_proba(X_latest)[0]
-signal   = np.argmax(proba)
-conf     = proba[signal]
-signal_map = {0: ('SELL', 'sell', '🔴'),
-              1: ('HOLD', 'hold', '🟡'),
-              2: ('BUY',  'buy',  '🟢')}
-sig_label, sig_class, sig_icon = signal_map[signal]
-current_price = float(dm['Close'].iloc[-1])
-# ==========================
-# ACCOUNT SUMMARY
-# ==========================
 
-portfolio_value = 0
+    # ==========================
+    # TEST FORECAST
+    # ==========================
 
-for asset, holding in st.session_state.portfolio.items():
-    portfolio_value += holding["shares"] * current_price
+        forecast_df = forecast_prices(df, forecast_days=30)
 
-total_account_value = st.session_state.cash + portfolio_value
-# ── TOP METRICS ───────────────────────────────────────────────
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Current Price", f"${current_price:.2f}")
-col2.metric("RSI", f"{dm['rsi'].iloc[-1]:.1f}")
-col3.metric("ATR (Volatility)", f"{dm['atr'].iloc[-1]:.2f}")
-col4.metric("Confidence", f"{conf:.0%}")
-# ==========================
-# ACCOUNT SUMMARY
-# ==========================
+        st.subheader("🔮 AI Forecast (Next 30 Days)")
+        st.dataframe(forecast_df)
+        # ── CURRENT SIGNAL ────────────────────────────────────────────
+        latest = dm[features].iloc[-1].values
+        X_latest = scaler.transform([latest])
+        proba    = model.predict_proba(X_latest)[0]
+        signal   = np.argmax(proba)
+        conf     = proba[signal]
+        signal_map = {0: ('SELL', 'sell', '🔴'),
+                    1: ('HOLD', 'hold', '🟡'),
+                    2: ('BUY',  'buy',  '🟢')}
+        sig_label, sig_class, sig_icon = signal_map[signal]
+        current_price = float(dm['Close'].iloc[-1])
+        # ==========================
+        # ACCOUNT SUMMARY
+        # ==========================
 
-portfolio_value = 0
+        portfolio_value = 0
 
-for asset, holding in st.session_state.portfolio.items():
-    portfolio_value += holding["shares"] * current_price
+        for asset, holding in st.session_state.portfolio.items():
+            portfolio_value += holding["shares"] * current_price
 
-total_account_value = st.session_state.cash + portfolio_value
+        total_account_value = st.session_state.cash + portfolio_value
+        # ── TOP METRICS ───────────────────────────────────────────────
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Current Price", f"${current_price:.2f}")
+        col2.metric("RSI", f"{dm['rsi'].iloc[-1]:.1f}")
+        col3.metric("ATR (Volatility)", f"{dm['atr'].iloc[-1]:.2f}")
+        col4.metric("Confidence", f"{conf:.0%}")
+        # ==========================
+        # ACCOUNT SUMMARY
+        # ==========================
 
-st.subheader("💰 Account Summary")
+        portfolio_value = 0
 
-a1, a2, a3, a4 = st.columns(4)
+        for asset, holding in st.session_state.portfolio.items():
+            portfolio_value += holding["shares"] * current_price
 
-a1.metric("Cash", f"${st.session_state.cash:,.2f}")
-a2.metric("Portfolio", f"${portfolio_value:,.2f}")
-a3.metric("Total Account", f"${total_account_value:,.2f}")
-a4.metric("Positions", len(st.session_state.portfolio))
+        total_account_value = st.session_state.cash + portfolio_value
+
+        st.subheader("💰 Account Summary")
+
+        a1, a2, a3, a4 = st.columns(4)
+
+        a1.metric("Cash", f"${st.session_state.cash:,.2f}")
+        a2.metric("Portfolio", f"${portfolio_value:,.2f}")
+        a3.metric("Total Account", f"${total_account_value:,.2f}")
+        a4.metric("Positions", len(st.session_state.portfolio))
 
 
 # ==========================
