@@ -14,6 +14,7 @@ import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
 from ui.dashboard import show_dashboard
+from ui.portfolio import show_portfolio
 
 st.set_page_config(
     page_title="Corn Futures AI Trader",
@@ -536,7 +537,7 @@ if page == "📈 Trading":
     show_trading(current_price)
 
 elif page == "📊 Portfolio":
-    pass
+    show_portfolio(current_price)
 
 elif page == "📉 Forecast":
     pass
