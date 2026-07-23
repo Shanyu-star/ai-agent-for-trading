@@ -492,6 +492,15 @@ def train_model(df, df_h):
 
     with st.spinner("Training AI model..."):
             model, scaler, features, dm = train_model(df, df_h)
+            sc1, sc2, sc3 = st.columns([1,2,1])
+with sc2:
+    st.markdown(f"""
+    <div class="signal-box {sig_class}">
+        {sig_icon} AI SIGNAL: {sig_label}<br>
+        <span style="font-size:18px">Confidence: {conf:.0%}</span>
+    </div>
+    """, unsafe_allow_html=True)
+
             
     if page == "🏠 Dashboard":
 
@@ -707,14 +716,6 @@ if sell_clicked:
     else:
         st.error("❌ You don't own any CORN contracts.")
 # ── SIGNAL BOX ────────────────────────────────────────────────
-sc1, sc2, sc3 = st.columns([1,2,1])
-with sc2:
-    st.markdown(f"""
-    <div class="signal-box {sig_class}">
-        {sig_icon} AI SIGNAL: {sig_label}<br>
-        <span style="font-size:18px">Confidence: {conf:.0%}</span>
-    </div>
-    """, unsafe_allow_html=True)
 
     # Confidence bars
     st.markdown("**Signal Probabilities:**")
