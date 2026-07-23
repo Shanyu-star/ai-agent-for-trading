@@ -13,6 +13,7 @@ from auth import create_user, login_user
 import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
+from ui.trading import show_trading
 st.markdown("""
 <div class='main-title'>
 🌽 Corn Futures AI
