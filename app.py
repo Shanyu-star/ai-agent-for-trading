@@ -17,6 +17,7 @@ from ui.dashboard import show_dashboard
 from ui.portfolio import show_portfolio
 from ui.trading import show_trading
 from ui.history import show_history
+from ui.forecast_page import show_forecast
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
@@ -541,7 +542,7 @@ elif page == "📊 Portfolio":
     show_portfolio(current_price)
 
 elif page == "📉 Forecast":
-    pass
+    show_forecast(forecast_df)
     
 elif page == "📜 Trade History":
     show_history()
