@@ -486,28 +486,30 @@ def train_model(df, df_h):
     
 
 # ── LOAD ──────────────────────────────────────────────────────
-    with st.spinner("Loading corn futures data..."):
-        df, df_h = load_data()
+with st.spinner("Loading corn futures data..."):
+    df, df_h = load_data()
 
 
-    with st.spinner("Training AI model..."):
-            model, scaler, features, dm = train_model(df, df_h)
-            sc1, sc2, sc3 = st.columns([1,2,1])
-with sc2:
-    st.markdown(f"""
-    <div class="signal-box {sig_class}">
-        {sig_icon} AI SIGNAL: {sig_label}<br>
-        <span style="font-size:18px">Confidence: {conf:.0%}</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-            
-    if page == "🏠 Dashboard":
+with st.spinner("Training AI model..."):
+    model, scaler, features, dm = train_model(df, df_h)
 
 
-    # ==========================
-    # TEST FORECAST
-    # ==========================
+if page == "🏠 Dashboard":
+
+    sc1, sc2, sc3 = st.columns([1,2,1])
+
+    with sc2:
+        st.markdown(f"""
+        <div class="signal-box {sig_class}">
+            {sig_icon} AI SIGNAL: {sig_label}<br>
+            <span style="font-size:18px">Confidence: {conf:.0%}</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+        # ==========================
+        # TEST FORECAST
+        # ==========================
 
         forecast_df = forecast_prices(df, forecast_days=30)
 
