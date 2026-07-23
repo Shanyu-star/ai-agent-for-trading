@@ -13,6 +13,17 @@ from auth import create_user, login_user
 import os
 import joblib
 from streamlit_autorefresh import st_autorefresh
+from ui.dashboard import show_dashboard
+
+if page == "🏠 Dashboard":
+    show_dashboard(
+        dm,
+        current_price,
+        conf,
+        sig_label,
+        sig_icon,
+        st.session_state
+    )
 st.set_page_config(
     page_title="Corn Futures AI Trader",
     page_icon="🌽",
